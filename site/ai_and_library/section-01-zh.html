@@ -224,7 +224,7 @@
       .inline-figure img {
         display: block;
         width: 100%;
-        max-width: 760px;
+        max-width: 380px;
         margin: 0 auto;
         border-radius: 6px;
       }
@@ -244,6 +244,68 @@
       .inline-figure a {
         color: var(--accent);
         word-break: break-word;
+      }
+
+      .image-lightbox {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: rgba(10, 16, 24, 0.82);
+        z-index: 999;
+      }
+
+      .image-lightbox.is-open {
+        display: flex;
+      }
+
+      .image-lightbox[hidden] {
+        display: none;
+      }
+
+      .image-lightbox-panel {
+        position: relative;
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 56px);
+        padding: 20px 20px 16px;
+        border-radius: 14px;
+        background: #0f1720;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      .image-lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: 0;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .image-lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .image-lightbox img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        max-height: calc(100vh - 150px);
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+
+      .image-lightbox-caption {
+        margin-top: 14px;
+        color: #d9e4f0;
+        text-align: center;
+        line-height: 1.6;
       }
 
       .comparison-cards {
@@ -619,5 +681,66 @@
         </nav>
       </main>
     </div>
+    <div class="image-lightbox" id="image-lightbox" hidden>
+      <div class="image-lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="image-lightbox-caption">
+        <button class="image-lightbox-close" type="button" aria-label="關閉圖片檢視">關閉</button>
+        <img id="image-lightbox-image" alt="">
+        <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const lightbox = document.getElementById("image-lightbox");
+        if (!lightbox) return;
+
+        const panel = lightbox.querySelector(".image-lightbox-panel");
+        const image = document.getElementById("image-lightbox-image");
+        const caption = document.getElementById("image-lightbox-caption");
+        const closeButton = lightbox.querySelector(".image-lightbox-close");
+        const triggers = document.querySelectorAll(".inline-figure-image");
+        let lastTrigger = null;
+
+        const closeLightbox = () => {
+          lightbox.hidden = true;
+          lightbox.classList.remove("is-open");
+          image.removeAttribute("src");
+          image.alt = "";
+          caption.innerHTML = "";
+          document.body.style.overflow = "";
+          if (lastTrigger) lastTrigger.focus();
+        };
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            const figure = trigger.closest(".inline-figure");
+            const figureImage = figure ? figure.querySelector("img") : null;
+            const figureCaption = figure ? figure.querySelector("figcaption") : null;
+
+            image.src = trigger.href;
+            image.alt = figureImage ? figureImage.alt : "";
+            caption.innerHTML = figureCaption ? figureCaption.innerHTML : "";
+
+            lastTrigger = trigger;
+            lightbox.hidden = false;
+            lightbox.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+            closeButton.focus();
+          });
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", (event) => {
+          if (!panel.contains(event.target)) closeLightbox();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

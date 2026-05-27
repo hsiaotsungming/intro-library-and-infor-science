@@ -55,6 +55,8 @@ When adding a meaningful bitmap image to a textbook page:
 - If the image has an external or traceable source, add a second caption line beginning with `圖片來源：` and preserve the source link when available.
 - If the image is user-provided and the user does not want a source line, omit the source line rather than inventing one.
 - Make the image clickable to open a larger view when the image contains details that may be hard to inspect in the normal page flow.
+- Prefer a page-level modal or lightbox over opening the raw image in a new tab.
+- Do not rely on `<a target="_blank">` as the main zoom behavior for textbook page images, especially in `file://` previews or the Codex in-app browser, where new-tab image popups may fail or behave inconsistently.
 
 Use this pattern for a clickable page image:
 
@@ -78,6 +80,8 @@ Use one shared modal per page for these image buttons. The modal should:
 - Use `cursor: zoom-in` on the clickable image and accessible labels on the open and close buttons.
 - Support multiple images on the same page by reading `data-modal-src` and `data-modal-alt` from the clicked button.
 - Leave the displayed crop non-destructive: if the page shows a cropped image, the modal should still open the full asset.
+- Work correctly in local `file://` previews as well as the published site.
+- Reuse the surrounding figure's caption inside the modal when that helps the reader keep the source and explanation visible while zoomed.
 
 The recommended page-level modal pattern is:
 
@@ -97,6 +101,7 @@ Use a small script that:
 - Opens the modal by removing `hidden` and adding the open class.
 - Clears the modal image `src` when closing.
 - Restores focus to the button that opened the modal.
+- Prevents default link navigation if an older page still wraps images in anchors, so the modal remains the primary interaction.
 
 ## Caption And Source Decisions
 

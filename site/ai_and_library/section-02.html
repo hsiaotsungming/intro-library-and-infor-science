@@ -235,6 +235,106 @@
         line-height: 1.35;
       }
 
+      .inline-figure {
+        margin: 4px 0 2px;
+      }
+
+      .inline-figure-image {
+        display: block;
+        cursor: zoom-in;
+      }
+
+      .inline-figure img {
+        display: block;
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+
+      .inline-figure.portrait img {
+        max-width: 360px;
+      }
+
+      .inline-figure.half img {
+        max-width: 380px;
+      }
+
+      .inline-figure figcaption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .inline-figure a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .image-lightbox {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: rgba(10, 16, 24, 0.82);
+        z-index: 999;
+      }
+
+      .image-lightbox.is-open {
+        display: flex;
+      }
+
+      .image-lightbox[hidden] {
+        display: none;
+      }
+
+      .image-lightbox-panel {
+        position: relative;
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 56px);
+        padding: 20px 20px 16px;
+        border-radius: 14px;
+        background: #0f1720;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      .image-lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: 0;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .image-lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .image-lightbox img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        max-height: calc(100vh - 150px);
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+
+      .image-lightbox-caption {
+        margin-top: 14px;
+        color: #d9e4f0;
+        text-align: center;
+        line-height: 1.6;
+      }
+
       .two-column {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -347,7 +447,7 @@
         <nav class="jump-nav" aria-label="Section navigation">
           <a href="#fixed-to-generative">1. Changes Brought by Generative Interaction</a>
           <a href="#xiaoshu">2. Case: Xiao-Shu at NLPI</a>
-          <a href="#ntu">3. Case 2: AI Applications at NTU Library</a>
+          <a href="#ntu">3. Case: AI Applications at NTU Library</a>
           <a href="#literacy">4. Pros and Cons of Using AI in Reader Services</a>
           <a href="#summary">5. Summary</a>
           <a href="#references">References</a>
@@ -368,21 +468,39 @@
           <div class="section-heading">
             <h2 id="xiaoshu-title">2. Case: Xiao-Shu at the National Library of Public Information</h2>
             <div class="content">
-              <p>Xiao-Shu at the National Library of Public Information is a representative case of using generative AI to serve readers. Xiao-Shu was jointly designed and developed by the National Library of Public Information and the Software Engineering and Technology Center at Tunghai University, and it has been described as Taiwan's first AI smart librarian. It uses ChatGPT as its core generative AI system, combines the image of a real librarian with synthetic human voice technology, and provides reader consultation, book recommendations, and everyday chat interaction.</p>
-              <p>Xiao-Shu combines a language model, a virtual librarian image, and voice synthesis technology. Readers can interact through voice, and the humanlike interface simulates something closer to face-to-face service.</p>
+              <figure class="inline-figure portrait">
+                <a class="inline-figure-image" href="./assets/xiaoshu-kiosk.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/xiaoshu-kiosk.jpg" alt="Service kiosk for Xiao-Shu, the AI smart librarian at the National Library of Public Information">
+                </a>
+                <figcaption>
+                  Xiao-Shu, the AI smart librarian at the National Library of Public Information<br>
+                  Source: <a href="https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm">https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm</a>
+                </figcaption>
+              </figure>
+              <p>Xiao-Shu at the National Library of Public Information is a representative case of using generative AI in reader services. Xiao-Shu was jointly designed and developed by the National Library of Public Information and the Software Engineering and Technology Center at Tunghai University, and it has been described as Taiwan's first AI smart librarian. Using ChatGPT as its generative AI core, Xiao-Shu combines the image of a real librarian with human voice synthesis technology to provide reader consultation, collection recommendations, and everyday chat interaction.</p>
+              <p>Xiao-Shu combines a language model, a virtual librarian persona, and voice synthesis technology. Readers can interact with it by voice, and the character-based interface simulates something closer to face-to-face service.</p>
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/xiaoshu-architecture.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/xiaoshu-architecture.jpg" alt="System architecture diagram for the AI smart librarian">
+                </a>
+                <figcaption>
+                  System architecture of the AI smart librarian<br>
+                  Source: <a href="https://www-ws.gov.taipei/001/Upload/430/relfile/37525/9192831/70cc3866-2bb1-4388-a6e7-93d84f8dd9a6.pdf">https://www-ws.gov.taipei/001/Upload/430/relfile/37525/9192831/70cc3866-2bb1-4388-a6e7-93d84f8dd9a6.pdf</a>
+                </figcaption>
+              </figure>
               <p>Readers can ask for suggestions by age, subject, author, or situation, and Xiao-Shu then provides suitable collection lists or popular reading lists. If readers provide a specific title, Xiao-Shu can also help check detailed holding information and locations, and guide readers to the relevant floor to find related topics. It can also answer questions about library rules and services, such as how to apply for a library card or reserve a discussion room.</p>
               <div class="role-cards">
                 <div class="role-card">
-                  <h3>Quick Help Desk</h3>
-                  <p>It provides immediate answers to common service questions.</p>
+                  <h3>Real-Time Consultation Entry Point</h3>
+                  <p>It helps answer common service questions and serves as a first-line service contact point.</p>
                 </div>
                 <div class="role-card">
                   <h3>Collection Guide</h3>
-                  <p>It turns reader needs into book recommendations and location guidance.</p>
+                  <p>It turns reader needs into book recommendations and collection location information.</p>
                 </div>
                 <div class="role-card">
                   <h3>Service Interface</h3>
-                  <p>It uses a friendly image and voice to reduce distance between readers and the system.</p>
+                  <p>Through a virtual librarian and voice interaction, it reduces the sense of distance readers may feel when facing a system.</p>
                 </div>
               </div>
             </div>
@@ -391,15 +509,33 @@
 
         <section class="section" id="ntu" aria-labelledby="ntu-title">
           <div class="section-heading">
-            <h2 id="ntu-title">3. Case 2: AI Applications at NTU Library</h2>
+            <h2 id="ntu-title">3. Case: AI Applications at NTU Library</h2>
             <div class="content">
-              <p>AI in libraries is not limited to general question answering. It can also support academic research. On the NTU Library website, readers can find the service interface of the AI librarian Libraly, which greets users in both Chinese and English and offers service support. NTU Library has also added an AI Research Assistant to its cloud library automation system, SLIM. The AI Research Assistant can provide five related documents, an overview summary, and related research questions based on the user's question, helping users find literature more efficiently and grasp the topic more quickly.</p>
-              <p>Comparing the two cases at NLPI and NTU Library shows an important difference. Xiao-Shu is more oriented toward public library services such as reader consultation, collection recommendations, and spatial guidance. NTU Library's AI Research Assistant is more oriented toward research support in a university library. For undergraduate students, graduate students, and faculty members, the question is often not simply whether the library has a particular book, but which important documents exist on a topic, how to begin searching, and what related research questions matter.</p>
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/ntu-libraly.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/ntu-libraly.jpg" alt="AI Librarian Libraly on the NTU Library website">
+                </a>
+                <figcaption>
+                  AI Librarian Libraly<br>
+                  Source: <a href="https://www.lib.ntu.edu.tw">https://www.lib.ntu.edu.tw</a>
+                </figcaption>
+              </figure>
+              <p>AI in libraries is not limited to general question answering. It can also support academic research. On the NTU Library website, readers can find the service interface of the AI librarian Libraly, which greets users in both Chinese and English and offers service support. NTU Library has also added an AI Research Assistant to its cloud library automation system, SLIM. Based on a user's question, the AI Research Assistant can provide five related references, an overview summary, and related research questions, helping users search for literature more efficiently and grasp topic information more quickly.</p>
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/slim-ai-assistant.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/slim-ai-assistant.jpg" alt="AI Research Assistant in SLIM">
+                </a>
+                <figcaption>
+                  AI Research Assistant in SLIM<br>
+                  Source: <a href="https://tul.blog.ntu.edu.tw/archives/36299">https://tul.blog.ntu.edu.tw/archives/36299</a>
+                </figcaption>
+              </figure>
+              <p>Comparing the two cases at NLPI and NTU Library shows an important difference. Xiao-Shu is more oriented toward reader consultation, collection recommendations, and spatial guidance in a public library. NTU Library's AI Research Assistant, by contrast, is more oriented toward research support in a university library. For undergraduate students, graduate students, and faculty members, the question is often not simply whether the library has a particular book, but which important references exist on a topic, how to begin searching for information, and what related research questions might be asked.</p>
               <div class="plain-panel">
                 <h3>AI as a Research Starting Point</h3>
                 <p>The AI Research Assistant places generative AI in the context of literature exploration and the first stage of research. It can help readers form an initial direction quickly, but users still need to return to original sources, databases, and librarian advice for checking, filtering, and citation.</p>
               </div>
-              <p>It is also important that NTU Library specifically reminds users that AI-generated content may vary in quality and should be checked and cited correctly. This matters because research support needs accuracy and traceability even more than ordinary service questions do.</p>
+              <p>It is worth noting that NTU Library specifically reminds users that the quality of AI-generated content may vary, and that users should verify it and cite it correctly. This is especially important because research support services require more accuracy and traceability than ordinary library service questions do.</p>
             </div>
           </div>
         </section>
@@ -438,16 +574,16 @@
           <div class="section-heading">
             <h2 id="summary-title">5. Summary</h2>
             <div class="content">
-              <p>This unit discussed how generative AI is used in library reader services. From Xiao-Shu at the National Library of Public Information to NTU Library's AI librarian and AI Research Assistant, we can see that AI is becoming part of library service.</p>
+              <p>From Xiao-Shu at the National Library of Public Information to NTU Library's AI librarian and AI Research Assistant, we can see that AI has already begun to become part of library service.</p>
               <div class="summary-cards">
                 <div class="summary-card">
-                  <p>AI can answer common questions, recommend books, guide users, and help researchers begin a topic search.</p>
+                  <p>It can answer common questions, recommend collections, guide readers in using services, and help researchers quickly grasp a topic and an initial literature direction.</p>
                 </div>
                 <div class="summary-card">
-                  <p>Its value is not to fully replace librarians, but to reorganize service work and support the first layer of interaction.</p>
+                  <p>The value of AI does not lie in fully replacing librarians, but in redistributing service work so that it can serve as a first-layer entry point and initial helper.</p>
                 </div>
                 <div class="summary-card">
-                  <p>Librarians are still needed for complex questions, unclear needs, ethical issues, and research support.</p>
+                  <p>For complex or ambiguous questions that require judgment, professional librarians remain indispensable, especially in research support and information literacy education.</p>
                 </div>
               </div>
             </div>
@@ -490,5 +626,66 @@
         </nav>
       </main>
     </div>
+    <div class="image-lightbox" id="image-lightbox" hidden>
+      <div class="image-lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="image-lightbox-caption">
+        <button class="image-lightbox-close" type="button" aria-label="Close image viewer">Close</button>
+        <img id="image-lightbox-image" alt="">
+        <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const lightbox = document.getElementById("image-lightbox");
+        if (!lightbox) return;
+
+        const panel = lightbox.querySelector(".image-lightbox-panel");
+        const image = document.getElementById("image-lightbox-image");
+        const caption = document.getElementById("image-lightbox-caption");
+        const closeButton = lightbox.querySelector(".image-lightbox-close");
+        const triggers = document.querySelectorAll(".inline-figure-image");
+        let lastTrigger = null;
+
+        const closeLightbox = () => {
+          lightbox.hidden = true;
+          lightbox.classList.remove("is-open");
+          image.removeAttribute("src");
+          image.alt = "";
+          caption.innerHTML = "";
+          document.body.style.overflow = "";
+          if (lastTrigger) lastTrigger.focus();
+        };
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            const figure = trigger.closest(".inline-figure");
+            const figureImage = figure ? figure.querySelector("img") : null;
+            const figureCaption = figure ? figure.querySelector("figcaption") : null;
+
+            image.src = trigger.href;
+            image.alt = figureImage ? figureImage.alt : "";
+            caption.innerHTML = figureCaption ? figureCaption.innerHTML : "";
+
+            lastTrigger = trigger;
+            lightbox.hidden = false;
+            lightbox.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+            closeButton.focus();
+          });
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", (event) => {
+          if (!panel.contains(event.target)) closeLightbox();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

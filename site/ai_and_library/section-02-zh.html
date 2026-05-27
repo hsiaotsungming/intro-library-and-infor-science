@@ -266,6 +266,82 @@
         margin-top: 0;
       }
 
+      .inline-figure {
+        margin: 4px 0 2px;
+      }
+
+      .inline-figure-image {
+        display: block;
+        cursor: zoom-in;
+      }
+
+      .inline-figure img {
+        display: block;
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+
+      .inline-figure.portrait img {
+        max-width: 360px;
+      }
+
+      .inline-figure.half img {
+        max-width: 380px;
+      }
+
+      .inline-figure figcaption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .inline-figure a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(18, 24, 32, 0.82);
+        z-index: 1000;
+      }
+
+      .lightbox.open {
+        display: flex;
+      }
+
+      .lightbox button {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 42px;
+        height: 42px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+        color: #ffffff;
+        font-size: 1.6rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .lightbox img {
+        display: block;
+        max-width: min(92vw, 1080px);
+        max-height: 88vh;
+        border-radius: 8px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      }
+
       .two-column {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -353,6 +429,10 @@
     </style>
   </head>
   <body>
+    <div class="lightbox" id="image-lightbox" aria-hidden="true">
+      <button type="button" id="lightbox-close" aria-label="關閉圖片">&times;</button>
+      <img id="lightbox-image" alt="">
+    </div>
     <div class="site">
       <header>
         <div class="brand">
@@ -378,7 +458,7 @@
         <nav class="jump-nav" aria-label="章節導覽">
           <a href="#fixed-to-generative">1. 生成式互動帶來的變化</a>
           <a href="#xiaoshu">2. 案例：國資圖的曉書</a>
-          <a href="#ntu">3. 案例二：臺大圖書館的 AI 應用</a>
+          <a href="#ntu">3. 案例：臺大圖書館的 AI 應用</a>
           <a href="#literacy">4. 應用 AI 服務讀者的優缺點</a>
           <a href="#summary">5. 小結</a>
           <a href="#references">參考文獻</a>
@@ -399,8 +479,26 @@
           <div class="section-heading">
             <h2 id="xiaoshu-title">2. 案例：國立公共資訊圖書館的曉書</h2>
             <div class="content">
+              <figure class="inline-figure portrait">
+                <a class="inline-figure-image" href="./assets/xiaoshu-kiosk.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/xiaoshu-kiosk.jpg" alt="國資圖 AI 智慧館員曉書的服務設備">
+                </a>
+                <figcaption>
+                  國資圖的AI智慧館員–曉書<br>
+                  來源：<a href="https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm">https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm</a>
+                </figcaption>
+              </figure>
               <p>國立公共資訊圖書館（國資圖）的曉書是導入生成式 AI 服務讀者的代表案例。曉書由國資圖與東海大學軟體工程與技術中心團隊共同設計與開發，並被稱為全國首位 AI 智慧館員。曉書以 ChatGPT 的生成式 AI 為核心，結合真人館員形象與真人聲音合成技術，提供讀者諮詢、館藏書籍推薦與日常聊天互動。</p>
               <p>曉書結合了語言模型、虛擬館員形象、聲音合成技術，讓讀者可以透過語音進行互動回答，並由具人物感的互動介面來模擬類似面對面服務的方式進行互動。</p>
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/xiaoshu-architecture.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/xiaoshu-architecture.jpg" alt="AI 智慧館員系統架構圖">
+                </a>
+                <figcaption>
+                  AI智慧館員系統架構圖<br>
+                  來源：<a href="https://www-ws.gov.taipei/001/Upload/430/relfile/37525/9192831/70cc3866-2bb1-4388-a6e7-93d84f8dd9a6.pdf">https://www-ws.gov.taipei/001/Upload/430/relfile/37525/9192831/70cc3866-2bb1-4388-a6e7-93d84f8dd9a6.pdf</a>
+                </figcaption>
+              </figure>
               <p>讀者可以依年齡、領域、作者或情境提出需求，曉書再提供適合的館藏清單或熱門書單。若讀者提供特定書名，曉書也可以協助查詢館藏詳細資訊與位置，並指引讀者到相應樓層尋找相關主題書籍。此外，曉書也能回答館務規定與服務問題，例如借閱證申請流程、討論小間預約方式等。</p>
               <div class="role-cards">
                 <div class="role-card">
@@ -446,9 +544,27 @@
 
         <section class="section" id="ntu" aria-labelledby="ntu-title">
           <div class="section-heading">
-            <h2 id="ntu-title">3. 案例二：臺大圖書館的 AI 應用</h2>
+            <h2 id="ntu-title">3. 案例：臺大圖書館的 AI 應用</h2>
             <div class="content">
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/ntu-libraly.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/ntu-libraly.jpg" alt="AI 館員賴柏麗">
+                </a>
+                <figcaption>
+                  AI 館員賴柏麗<br>
+                  來源：<a href="https://www.lib.ntu.edu.tw">www.lib.ntu.edu.tw</a>
+                </figcaption>
+              </figure>
               <p>AI 在圖書館中的應用不只限於一般問答，也可以支援學術研究。臺大圖書館網站中出現 AI 館員賴柏麗的服務界面，並會以中英文問候、提供服務。臺大圖書館也在雲端圖書館自動化系統 SLIM 中新增 AI 研究助理功能。AI 研究助理可以依據使用者問題提供 5 篇相關文獻、概覽摘要及相關研究問題，協助使用者更有效率地查找文獻與掌握主題資訊。</p>
+              <figure class="inline-figure half">
+                <a class="inline-figure-image" href="./assets/slim-ai-assistant.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/slim-ai-assistant.jpg" alt="SLIM 的 AI 研究助理">
+                </a>
+                <figcaption>
+                  SLIM的AI研究助理<br>
+                  來源：<a href="https://tul.blog.ntu.edu.tw/archives/36299">https://tul.blog.ntu.edu.tw/archives/36299</a>
+                </figcaption>
+              </figure>
               <p>比較國資圖和臺大的兩個案例。曉書較偏向公共圖書館中的讀者諮詢、館藏推薦與空間導引。臺大圖書館的 AI 研究助理則偏向大學圖書館的研究支援功能。對大學生、研究生與教師而言，問題往往不是有沒有這本書而已，而是這個主題有哪些重要文獻、可以如何開始查資料、相關研究問題有哪些。</p>
               <div class="plain-panel">
                 <h3>AI 作為研究起點</h3>
@@ -493,7 +609,7 @@
           <div class="section-heading">
             <h2 id="summary-title">5. 小結</h2>
             <div class="content">
-              <p>本單元討論了生成式 AI 在圖書館讀者服務中的應用。從國資圖的曉書到臺大圖書館的 AI 館員與 AI 研究助理，可以看到 AI 已經開始成為圖書館服務的一部分。</p>
+              <p>從國資圖的曉書到臺大圖書館的 AI 館員與 AI 研究助理，可以看到 AI 已經開始成為圖書館服務的一部分。</p>
               <div class="summary-cards">
                 <div class="summary-card">
                   <p>它可以回答常見問題、推薦館藏、導引讀者使用服務，也可以協助研究者快速掌握主題與文獻方向。</p>
@@ -545,5 +661,44 @@
         </nav>
       </main>
     </div>
+    <script>
+      (function () {
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImage = document.getElementById("lightbox-image");
+        const closeButton = document.getElementById("lightbox-close");
+        const triggers = document.querySelectorAll(".inline-figure-image");
+
+        function closeLightbox() {
+          lightbox.classList.remove("open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lightboxImage.removeAttribute("src");
+          lightboxImage.removeAttribute("alt");
+        }
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            const image = trigger.querySelector("img");
+            lightboxImage.src = trigger.href;
+            lightboxImage.alt = image ? image.alt : "";
+            lightbox.classList.add("open");
+            lightbox.setAttribute("aria-hidden", "false");
+          });
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (event) => {
+          if (event.target === lightbox) {
+            closeLightbox();
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("open")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

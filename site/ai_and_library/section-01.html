@@ -224,6 +224,97 @@
         background: var(--panel);
       }
 
+      .inline-figure {
+        margin: 4px 0 2px;
+      }
+
+      .inline-figure img {
+        display: block;
+        width: 100%;
+        max-width: 380px;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+
+      .inline-figure-image {
+        display: block;
+      }
+
+      .inline-figure figcaption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .inline-figure a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .image-lightbox {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: rgba(10, 16, 24, 0.82);
+        z-index: 999;
+      }
+
+      .image-lightbox.is-open {
+        display: flex;
+      }
+
+      .image-lightbox[hidden] {
+        display: none;
+      }
+
+      .image-lightbox-panel {
+        position: relative;
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 56px);
+        padding: 20px 20px 16px;
+        border-radius: 14px;
+        background: #0f1720;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      .image-lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: 0;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .image-lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      .image-lightbox img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        max-height: calc(100vh - 150px);
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+
+      .image-lightbox-caption {
+        margin-top: 14px;
+        color: #d9e4f0;
+        text-align: center;
+        line-height: 1.6;
+      }
+
       .comparison-cards {
         display: grid;
         gap: 14px;
@@ -387,6 +478,15 @@
             <h2 id="turing-test-title">1. What Is the Turing Test?</h2>
             <div class="content">
               <p>In 1950, Alan Turing asked a famous question: can machines think? He quickly noted that the words machine and think are hard to define clearly. So instead of trying to settle the meaning of those terms directly, he turned the abstract problem into a more workable test. That test later became known as the Turing Test, or the imitation game.</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/turing-test.webp" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/turing-test.webp" alt="Turing Test diagram showing a computer, a human responder, and an interrogator">
+                </a>
+                <figcaption>
+                  Turing Test diagram<br>
+                  Source: <a href="https://seattlewebsitedesign.medium.com/what-is-a-turing-testt-d379477fed9b">https://seattlewebsitedesign.medium.com/what-is-a-turing-testt-d379477fed9b</a>
+                </figcaption>
+              </figure>
               <p>The basic idea is simple. A human judge talks by text with two partners. One is a real human and the other is a machine. The judge cannot see either partner and must decide from the written replies which one is human and which one is machine.</p>
               <p>The importance of the test is that it turns the difficult question of thinking into a question of behavior. The Turing Test does not directly measure whether a machine has consciousness, a soul, or inner experience. It asks whether the machine can perform in a conversation in a way that makes it hard to distinguish from a human.</p>
               <p>For this reason, the Turing Test can also be understood as a test of replaceability. If a system can take a human role in conversation and lead a judge to mistake it for a person, or leave the judge close to random guessing, then the system shows that it can substitute for a human role in that interaction. It does not prove that the machine truly thinks. It shows that the machine can act like a human in a social situation.</p>
@@ -399,7 +499,25 @@
             <h2 id="llm-change-title">2. How Large Language Models Change the Turing Test</h2>
             <div class="content">
               <p>Early chatbots mostly relied on fixed rules and prewritten response patterns. They could imitate conversation in narrow situations, but once users moved outside the expected range, the illusion often broke. ELIZA from the 1960s is a classic example. It could imitate the style of a therapist, but it did not really understand the user's input.</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/eliza-system.png" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/eliza-system.png" alt="ELIZA system interface showing a text-based conversation">
+                </a>
+                <figcaption>
+                  ELIZA system interface<br>
+                  Source: <a href="https://es.linkedin.com/pulse/eliza-el-primer-chatbot-que-revolucion%C3%B3-la-humana-alvarado-guzm%C3%A1n-qhiuc">https://es.linkedin.com/pulse/eliza-el-primer-chatbot-que-revolucion%C3%B3-la-humana-alvarado-guzm%C3%A1n-qhiuc</a>
+                </figcaption>
+              </figure>
               <p>Large language models changed this situation. Rather than following only a small set of fixed rules, they are trained on very large text corpora and learn patterns in language. This makes their responses more natural, more flexible, and more sensitive to context. Once these models enter a Turing Test setting, the question is no longer only whether a machine can answer. The question becomes whether a machine can act like a specific person in open conversation.</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/turing-test-results.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/turing-test-results.jpg" alt="Figure comparing AI witness win rates and confidence in Turing test verdicts">
+                </a>
+                <figcaption>
+                  Left: win rates of different AI models in the Turing Test. Right: judges' confidence when deciding whether a participant was human or AI.<br>
+                  Source: <a href="https://www.pnas.org/doi/10.1073/pnas.2524472123">https://www.pnas.org/doi/10.1073/pnas.2524472123</a>
+                </figcaption>
+              </figure>
               <p>A recent study by Jones and Bergen provides an important example. In a standard three-party Turing Test, participants talked by text with both a real human and an AI system, then judged which one was human. With suitable persona prompts, some large language models met or exceeded the 50 percent threshold. GPT-4.5 was judged as human 73 percent of the time in a five-minute test, while LLaMa-3.1-405B reached 56 percent. ELIZA and GPT-4o scored below chance.</p>
               <p>The significance of this result is not only that the models answered well. It is that they could perform a more complete sense of personhood. The study highlights the importance of persona prompts. A vague instruction to act human may not be enough, but a more specific role with age, tone, background, or internet style makes it easier for a model to maintain a consistent voice and appear more like a real person.</p>
               <p>Large language models therefore shift the Turing Test toward a new problem. AI is not only about giving correct answers. It is also about presenting a believable role in social interaction. That matters not only for knowledge work, but also for identity imitation, social exchange, and trust.</p>
@@ -412,6 +530,15 @@
             <h2 id="human-judgment-title">3. How Do Humans Decide Who Is Human?</h2>
             <div class="content">
               <p>In today's Turing Test, human judges do not only rely on knowledge questions or logic puzzles. This differs from a common intuition about intelligence. We might assume that someone who answers obscure facts correctly, reasons quickly, or gives complete information will seem more human. With large language models, that assumption becomes more complicated.</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/interrogator-strategies.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/interrogator-strategies.jpg" alt="Figure showing interrogator strategy categories, their proportion of games, and mean accuracy with confidence intervals">
+                </a>
+                <figcaption>
+                  Left: the share of Turing Test games in which judges used each strategy. Right: the mean accuracy of those strategies with 95% confidence intervals.<br>
+                  Source: <a href="https://www.pnas.org/doi/10.1073/pnas.2524472123">https://www.pnas.org/doi/10.1073/pnas.2524472123</a>
+                </figcaption>
+              </figure>
               <p>People now know that computers and AI are often very good at knowledge questions. If a speaker answers too quickly, too correctly, or too completely, that can actually trigger suspicion that the speaker is AI. In other words, features that once looked like signs of intelligence can now look like signs of not being human.</p>
               <p>Instead, judges often look for human clues in language style, rhythm, emotion, humor, personal opinion, and small mistakes. A real person may make typos, forget a minor fact, sound unsure, or hesitate. These may look like weaknesses, but in the context of deciding whether someone is human, they can serve as evidence of humanness.</p>
               <p>This creates an interesting paradox. If AI wants to pass the Turing Test, it may not be enough to pursue perfect answers. It may need to imitate human imperfection. It needs to know when not to sound too complete, when to sound uncertain, when to shift into ordinary language, and even when to make a small mistake.</p>
@@ -426,6 +553,15 @@
             <div class="content">
               <p>The Turing Test focuses on outward performance. If a machine behaves in conversation in a way that people cannot distinguish from a real person, can we treat it as having some kind of intelligence? This view has drawn important criticism. One of the most famous comes from John Searle's Chinese Room thought experiment from 1980.</p>
               <p>In <em>Minds, Brains, and Programs</em>, Searle argues that running a computer program is not enough to produce intentionality, which means a mental state that is about or directed toward meaning. His claim is that executing a program by itself is not a sufficient condition for understanding.</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/chinese-room.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/chinese-room.jpg" alt="Illustration of the Chinese Room thought experiment">
+                </a>
+                <figcaption>
+                  The Chinese Room thought experiment<br>
+                  Source: <a href="https://www.newton.com.tw/wiki/%E4%B8%AD%E6%96%87%E6%88%BF%E9%96%93#google_vignette">https://www.newton.com.tw/wiki/%E4%B8%AD%E6%96%87%E6%88%BF%E9%96%93#google_vignette</a>
+                </figcaption>
+              </figure>
               <p>The thought experiment works like this. Imagine a person locked in a room who does not understand Chinese. People outside the room pass in questions written in Chinese. The person inside cannot read Chinese, but has a rule book written in a language they do understand. The book tells them which Chinese symbols to send out when certain other Chinese symbols appear. By following the rules, the person can return an appropriate Chinese answer.</p>
               <p>From the outside, the room seems to understand Chinese because it receives Chinese questions and produces suitable Chinese answers. But the person inside does not know what any of the Chinese symbols mean. They are only manipulating symbols according to rules.</p>
               <p>The key distinction here is between syntax and semantics. Syntax is about the formal arrangement and transformation of symbols. Semantics is about meaning, such as what a word refers to in the world or in experience. Searle's point is that a computer program may be very successful at handling syntax without actually possessing semantics.</p>
@@ -552,5 +688,66 @@
         </nav>
       </main>
     </div>
+    <div class="image-lightbox" id="image-lightbox" hidden>
+      <div class="image-lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="image-lightbox-caption">
+        <button class="image-lightbox-close" type="button" aria-label="Close image viewer">Close</button>
+        <img id="image-lightbox-image" alt="">
+        <div class="image-lightbox-caption" id="image-lightbox-caption"></div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const lightbox = document.getElementById("image-lightbox");
+        if (!lightbox) return;
+
+        const panel = lightbox.querySelector(".image-lightbox-panel");
+        const image = document.getElementById("image-lightbox-image");
+        const caption = document.getElementById("image-lightbox-caption");
+        const closeButton = lightbox.querySelector(".image-lightbox-close");
+        const triggers = document.querySelectorAll(".inline-figure-image");
+        let lastTrigger = null;
+
+        const closeLightbox = () => {
+          lightbox.hidden = true;
+          lightbox.classList.remove("is-open");
+          image.removeAttribute("src");
+          image.alt = "";
+          caption.innerHTML = "";
+          document.body.style.overflow = "";
+          if (lastTrigger) lastTrigger.focus();
+        };
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            const figure = trigger.closest(".inline-figure");
+            const figureImage = figure ? figure.querySelector("img") : null;
+            const figureCaption = figure ? figure.querySelector("figcaption") : null;
+
+            image.src = trigger.href;
+            image.alt = figureImage ? figureImage.alt : "";
+            caption.innerHTML = figureCaption ? figureCaption.innerHTML : "";
+
+            lastTrigger = trigger;
+            lightbox.hidden = false;
+            lightbox.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+            closeButton.focus();
+          });
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+
+        lightbox.addEventListener("click", (event) => {
+          if (!panel.contains(event.target)) closeLightbox();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+            closeLightbox();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
