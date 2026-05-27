@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reader-Facing AI Applications｜Introduction to Library &amp; Information Science</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #172333;
+        background: #f7f8fa;
+        --ink: #172333;
+        --muted: #53616f;
+        --line: #d8dee6;
+        --panel: #ffffff;
+        --accent: #23557d;
+        --green: #2d8a78;
+        --soft: #eef3f6;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 44%, #edf2f5 100%);
+      }
+
+      .site {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0 72px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        padding-bottom: 56px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 4px;
+      }
+
+      .brand-title {
+        color: var(--ink);
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      .brand span,
+      .back-link {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: grid;
+        justify-items: end;
+        gap: 18px;
+      }
+
+      .lang-switch {
+        display: inline-flex;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .lang-switch a {
+        padding: 8px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.86rem;
+        line-height: 1;
+      }
+
+      .lang-switch a.active {
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .back-link {
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        padding: 8px 0;
+      }
+
+      .back-link:hover,
+      .jump-nav a:hover {
+        color: var(--accent);
+        border-color: var(--green);
+      }
+
+      main {
+        display: grid;
+        gap: 34px;
+      }
+
+      .hero {
+        max-width: 980px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--green);
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      h1, h2, h3, p {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        color: var(--ink);
+        font-size: clamp(3.2rem, 7vw, 6rem);
+        line-height: 1.02;
+      }
+
+      .lede {
+        max-width: 900px;
+        margin-top: 24px;
+        color: #40505f;
+        font-size: clamp(1.42rem, 2.2vw, 1.95rem);
+        line-height: 1.62;
+      }
+
+      .intro {
+        max-width: 930px;
+        margin-top: 18px;
+        color: #4b5a67;
+        font-size: clamp(1.16rem, 1.6vw, 1.3rem);
+        line-height: 1.76;
+      }
+
+      .jump-nav,
+      .section-pager {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .jump-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: #334155;
+        background: rgba(255, 255, 255, 0.78);
+        text-decoration: none;
+        font-size: 0.96rem;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 36px;
+        align-items: start;
+      }
+
+      h2 {
+        color: var(--ink);
+        font-size: clamp(1.9rem, 3vw, 2.7rem);
+        line-height: 1.2;
+      }
+
+      .content {
+        display: grid;
+        gap: 20px;
+      }
+
+      p,
+      li {
+        color: var(--muted);
+        font-size: clamp(1.12rem, 1.5vw, 1.28rem);
+        line-height: 1.74;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.35em;
+      }
+
+      li + li {
+        margin-top: 10px;
+      }
+
+      .role-cards,
+      .summary-cards,
+      .reference-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .role-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .role-card,
+      .summary-card,
+      .reference-item,
+      .plain-panel {
+        padding: 20px 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .role-card h3,
+      .plain-panel h3 {
+        margin-bottom: 10px;
+        color: var(--ink);
+        font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+        line-height: 1.35;
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .reference-item {
+        border-left: 5px solid var(--accent);
+      }
+
+      .reference-item a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .section-pager {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding-top: 10px;
+        border-bottom: 0;
+      }
+
+      .pager-link {
+        display: grid;
+        gap: 6px;
+        min-height: 120px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.84);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .pager-link:hover {
+        border-color: #b8c7d6;
+        box-shadow: 0 14px 32px rgba(23, 35, 51, 0.06);
+      }
+
+      .pager-label {
+        color: var(--green);
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      .pager-title {
+        color: var(--ink);
+        font-size: 1.2rem;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .pager-note {
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 920px) {
+        .site {
+          width: min(100% - 32px, 760px);
+        }
+
+        header,
+        .section-heading {
+          display: block;
+        }
+
+        .header-actions {
+          justify-items: start;
+          margin-top: 18px;
+        }
+
+        .content {
+          margin-top: 18px;
+        }
+
+        .role-cards,
+        .two-column,
+        .section-pager {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site">
+      <header>
+        <div class="brand">
+          <span class="brand-title">Introduction to Library &amp; Information Science</span>
+          <span>AI &amp; Library</span>
+        </div>
+        <div class="header-actions">
+          <div class="lang-switch" aria-label="Language switcher">
+            <a class="active" href="./section-02.html" aria-current="page">ENG</a>
+            <a href="./section-02-zh.html">繁中</a>
+          </div>
+          <a class="back-link" href="./index.html">Back to Module</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <span class="eyebrow">Module 01 Section 02</span>
+          <h1 id="page-title">Reader-Facing AI Applications</h1>
+          <p class="intro">How can AI become part of reader services in libraries? This unit first explains the difference between traditional service chatbots and generative AI services. It then introduces two cases in Taiwan: the National Library of Public Information and National Taiwan University Library.</p>
+        </section>
+
+        <nav class="jump-nav" aria-label="Section navigation">
+          <a href="#fixed-to-generative">1. Changes Brought by Generative Interaction</a>
+          <a href="#xiaoshu">2. Case: Xiao-Shu at NLPI</a>
+          <a href="#ntu">3. Case 2: AI Applications at NTU Library</a>
+          <a href="#literacy">4. Pros and Cons of Using AI in Reader Services</a>
+          <a href="#summary">5. Summary</a>
+          <a href="#references">References</a>
+        </nav>
+
+        <section class="section" id="fixed-to-generative" aria-labelledby="fixed-to-generative-title">
+          <div class="section-heading">
+            <h2 id="fixed-to-generative-title">1. Changes Brought by Generative Interaction</h2>
+            <div class="content">
+              <p>In the past, tools such as FAQs or user guides often depended on fixed question-and-answer databases. After a user entered a question, the system tried to match keywords and return the closest answer. If a reader's question was too conversational, too vague, or included several needs at once, the system might fail to understand it correctly. The same problem appears in catalog search interfaces, where users often need some prior understanding of the search system and its content before they can use it smoothly. This creates a higher barrier for users who are not familiar with library systems.</p>
+              <p>Generative AI changes this interaction. It responds to user input by drawing on its own knowledge or techniques such as retrieval-augmented generation, or RAG. This allows users to ask questions in language that is much closer to everyday speech, such as asking for science books for junior high school students or asking where to study quietly on a first visit to the library. Users do not need to know the formal classification system, service names, or search fields in advance. They can describe their needs in their own words. This may lower the barrier for new readers, children, and older adults.</p>
+              <p>However, the strength of generative AI is also its risk. Because it can produce fluent text, wrong answers can still look very convincing. When libraries introduce AI services, they need to consider this risk and prepare responses to it.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="xiaoshu" aria-labelledby="xiaoshu-title">
+          <div class="section-heading">
+            <h2 id="xiaoshu-title">2. Case: Xiao-Shu at the National Library of Public Information</h2>
+            <div class="content">
+              <p>Xiao-Shu at the National Library of Public Information is a representative case of using generative AI to serve readers. Xiao-Shu was jointly designed and developed by the National Library of Public Information and the Software Engineering and Technology Center at Tunghai University, and it has been described as Taiwan's first AI smart librarian. It uses ChatGPT as its core generative AI system, combines the image of a real librarian with synthetic human voice technology, and provides reader consultation, book recommendations, and everyday chat interaction.</p>
+              <p>Xiao-Shu combines a language model, a virtual librarian image, and voice synthesis technology. Readers can interact through voice, and the humanlike interface simulates something closer to face-to-face service.</p>
+              <p>Readers can ask for suggestions by age, subject, author, or situation, and Xiao-Shu then provides suitable collection lists or popular reading lists. If readers provide a specific title, Xiao-Shu can also help check detailed holding information and locations, and guide readers to the relevant floor to find related topics. It can also answer questions about library rules and services, such as how to apply for a library card or reserve a discussion room.</p>
+              <div class="role-cards">
+                <div class="role-card">
+                  <h3>Quick Help Desk</h3>
+                  <p>It provides immediate answers to common service questions.</p>
+                </div>
+                <div class="role-card">
+                  <h3>Collection Guide</h3>
+                  <p>It turns reader needs into book recommendations and location guidance.</p>
+                </div>
+                <div class="role-card">
+                  <h3>Service Interface</h3>
+                  <p>It uses a friendly image and voice to reduce distance between readers and the system.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="ntu" aria-labelledby="ntu-title">
+          <div class="section-heading">
+            <h2 id="ntu-title">3. Case 2: AI Applications at NTU Library</h2>
+            <div class="content">
+              <p>AI in libraries is not limited to general question answering. It can also support academic research. On the NTU Library website, readers can find the service interface of the AI librarian Libraly, which greets users in both Chinese and English and offers service support. NTU Library has also added an AI Research Assistant to its cloud library automation system, SLIM. The AI Research Assistant can provide five related documents, an overview summary, and related research questions based on the user's question, helping users find literature more efficiently and grasp the topic more quickly.</p>
+              <p>Comparing the two cases at NLPI and NTU Library shows an important difference. Xiao-Shu is more oriented toward public library services such as reader consultation, collection recommendations, and spatial guidance. NTU Library's AI Research Assistant is more oriented toward research support in a university library. For undergraduate students, graduate students, and faculty members, the question is often not simply whether the library has a particular book, but which important documents exist on a topic, how to begin searching, and what related research questions matter.</p>
+              <div class="plain-panel">
+                <h3>AI as a Research Starting Point</h3>
+                <p>The AI Research Assistant places generative AI in the context of literature exploration and the first stage of research. It can help readers form an initial direction quickly, but users still need to return to original sources, databases, and librarian advice for checking, filtering, and citation.</p>
+              </div>
+              <p>It is also important that NTU Library specifically reminds users that AI-generated content may vary in quality and should be checked and cited correctly. This matters because research support needs accuracy and traceability even more than ordinary service questions do.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="literacy" aria-labelledby="literacy-title">
+          <div class="section-heading">
+            <h2 id="literacy-title">4. Pros and Cons of Using AI in Reader Services</h2>
+            <div class="content">
+              <p>AI allows readers to ask questions in natural language, receive immediate responses to common questions, and get help with collection recommendations and research ideas. For readers who are not familiar with library systems, this service style is usually more approachable than a traditional search interface. But AI may also generate wrong information, invented data, or outdated rules as if they were true. In research support contexts, if users directly trust the documents, summaries, or citations suggested by AI, they may misunderstand the topic or even affect the accuracy of their research results.</p>
+              <p>At the same time, when libraries introduce AI services, readers also need to learn how to distinguish sources, verify citations, compare database records, and understand that generated content may include errors, bias, or hallucinations. Including prompt skills for generative AI, citation practices, and academic ethics in reader education reflects this direction. Overall, AI is well suited to serve as a first entry point for frequent, standardized, and lower-risk questions. Librarians, by contrast, remain responsible for services that involve complexity, professional judgment, and ethical responsibility.</p>
+              <div class="two-column">
+                <div class="plain-panel">
+                  <h3>Pros</h3>
+                  <ul>
+                    <li>Immediate responses to common questions</li>
+                    <li>Lower barriers through natural language interaction</li>
+                    <li>Collection recommendations based on interests and needs</li>
+                    <li>Support for the first stage of research and topic exploration</li>
+                  </ul>
+                </div>
+                <div class="plain-panel">
+                  <h3>Cons</h3>
+                  <ul>
+                    <li>Wrong information, invented data, or outdated rules</li>
+                    <li>Convincing language even when the answer is wrong</li>
+                    <li>Not suitable for high-risk questions involving data, ethics, or complaints</li>
+                    <li>Need for ongoing maintenance as rules, collections, and systems change</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="summary" aria-labelledby="summary-title">
+          <div class="section-heading">
+            <h2 id="summary-title">5. Summary</h2>
+            <div class="content">
+              <p>This unit discussed how generative AI is used in library reader services. From Xiao-Shu at the National Library of Public Information to NTU Library's AI librarian and AI Research Assistant, we can see that AI is becoming part of library service.</p>
+              <div class="summary-cards">
+                <div class="summary-card">
+                  <p>AI can answer common questions, recommend books, guide users, and help researchers begin a topic search.</p>
+                </div>
+                <div class="summary-card">
+                  <p>Its value is not to fully replace librarians, but to reorganize service work and support the first layer of interaction.</p>
+                </div>
+                <div class="summary-card">
+                  <p>Librarians are still needed for complex questions, unclear needs, ethical issues, and research support.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="references" aria-labelledby="references-title">
+          <div class="section-heading">
+            <h2 id="references-title">References</h2>
+            <div class="content">
+              <div class="reference-list">
+                <div class="reference-item">
+                  <p>National Library of Public Information. (n.d.). AI smart librarian. <a href="https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm">https://www.nlpi.edu.tw/ReaderService/SmartService/Service10.htm</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>National Taiwan University Library. (2025, June 2). Announcement: AI Research Assistant added to the cloud library automation system SLIM. <a href="https://www.lib.ntu.edu.tw/node/5042">https://www.lib.ntu.edu.tw/node/5042</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>National Taiwan University Library. (n.d.). Librarian support for classroom teaching. <a href="https://www.lib.ntu.edu.tw/node/3570">https://www.lib.ntu.edu.tw/node/3570</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>NTU Library Reference Service Blog. (2024, September 13). AI. <a href="https://tul.blog.ntu.edu.tw/archives/tag/ai">https://tul.blog.ntu.edu.tw/archives/tag/ai</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <nav class="section-pager" aria-label="Page navigation">
+          <a class="pager-link" href="./section-01.html">
+            <span class="pager-label">Previous</span>
+            <span class="pager-title">Does AI Have Intelligence?</span>
+            <span class="pager-note">Return to Section 01.</span>
+          </a>
+          <a class="pager-link" href="./index.html">
+            <span class="pager-label">Next</span>
+            <span class="pager-title">Section 03</span>
+            <span class="pager-note">The next section is still listed on the module page.</span>
+          </a>
+        </nav>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Does AI Have Intelligence?｜Introduction to Library &amp; Information Science</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #172333;
+        background: #f7f8fa;
+        --ink: #172333;
+        --muted: #53616f;
+        --line: #d8dee6;
+        --panel: #ffffff;
+        --accent: #23557d;
+        --green: #2d8a78;
+        --soft: #eef3f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 44%, #edf2f5 100%);
+      }
+
+      .site {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0 72px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        padding-bottom: 56px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 4px;
+      }
+
+      .brand-title {
+        color: var(--ink);
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      .brand span,
+      .back-link {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: grid;
+        justify-items: end;
+        gap: 18px;
+      }
+
+      .lang-switch {
+        display: inline-flex;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .lang-switch a {
+        padding: 8px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.86rem;
+        line-height: 1;
+      }
+
+      .lang-switch a.active {
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .back-link {
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        padding: 8px 0;
+      }
+
+      .back-link:hover,
+      .jump-nav a:hover {
+        color: var(--accent);
+        border-color: var(--green);
+      }
+
+      main {
+        display: grid;
+        gap: 34px;
+      }
+
+      .hero {
+        max-width: 980px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--green);
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        color: var(--ink);
+        font-size: clamp(3.2rem, 7vw, 6rem);
+        line-height: 1.02;
+      }
+
+      .lede {
+        max-width: 900px;
+        margin-top: 24px;
+        color: #40505f;
+        font-size: clamp(1.42rem, 2.2vw, 1.95rem);
+        line-height: 1.62;
+      }
+
+      .jump-nav,
+      .section-pager {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .jump-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: #334155;
+        background: rgba(255, 255, 255, 0.78);
+        text-decoration: none;
+        font-size: 0.96rem;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 36px;
+        align-items: start;
+      }
+
+      h2 {
+        color: var(--ink);
+        font-size: clamp(1.9rem, 3vw, 2.7rem);
+        line-height: 1.2;
+      }
+
+      .content {
+        display: grid;
+        gap: 20px;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        color: var(--muted);
+        font-size: clamp(1.12rem, 1.5vw, 1.28rem);
+        line-height: 1.74;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.35em;
+      }
+
+      li + li {
+        margin-top: 10px;
+      }
+
+      .statement {
+        padding: 24px 28px;
+        border-left: 5px solid var(--green);
+        background: var(--panel);
+        box-shadow: 0 16px 40px rgba(23, 35, 51, 0.06);
+      }
+
+      .summary-cards {
+        display: grid;
+        gap: 12px;
+      }
+
+      .summary-card {
+        padding: 20px 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .comparison-cards {
+        display: grid;
+        gap: 14px;
+      }
+
+      .comparison-card {
+        display: grid;
+        grid-template-columns: 180px repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .comparison-label {
+        color: var(--accent);
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.45;
+      }
+
+      .comparison-item strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 0.98rem;
+      }
+
+      .comparison-item p {
+        font-size: 1.02rem;
+      }
+
+      .reference-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .reference-item {
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--accent);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .reference-item a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .section-pager {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding-top: 10px;
+        border-bottom: 0;
+      }
+
+      .pager-link {
+        display: grid;
+        gap: 6px;
+        min-height: 120px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.84);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .pager-link:hover {
+        border-color: #b8c7d6;
+        box-shadow: 0 14px 32px rgba(23, 35, 51, 0.06);
+      }
+
+      .pager-label {
+        color: var(--green);
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      .pager-title {
+        color: var(--ink);
+        font-size: 1.2rem;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .pager-note {
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 920px) {
+        .site {
+          width: min(100% - 32px, 760px);
+        }
+
+        header,
+        .section-heading {
+          display: block;
+        }
+
+        .header-actions {
+          justify-items: start;
+          margin-top: 18px;
+        }
+
+        .content {
+          margin-top: 18px;
+        }
+
+        .section-pager,
+        .comparison-card {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site">
+      <header>
+        <div class="brand">
+          <span class="brand-title">Introduction to Library &amp; Information Science</span>
+          <span>AI &amp; Library</span>
+        </div>
+
+        <div class="header-actions">
+          <div class="lang-switch" aria-label="Language switcher">
+            <a class="active" href="./section-01.html" aria-current="page">ENG</a>
+            <a href="./section-01-zh.html">繁中</a>
+          </div>
+          <a class="back-link" href="./index.html">Back to Module</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <span class="eyebrow">Module 01 Section 01</span>
+          <h1 id="page-title">Does AI Have Intelligence?</h1>
+          <p class="lede">From the Turing Test to the Chinese Room</p>
+          <p class="lede" style="font-size: clamp(1.18rem, 1.7vw, 1.35rem); margin-top: 18px;">
+            Does looking human mean understanding like a human? This unit begins with Alan Turing's Turing Test and asks how that test approaches the question of whether machines can think. It then considers how large language models change the meaning of the Turing Test and how people decide whether they are talking to a real person. Finally, it turns to John Searle's Chinese Room and asks how that thought experiment challenges the Turing Test.
+          </p>
+        </section>
+
+        <nav class="jump-nav" aria-label="Section navigation">
+          <a href="#turing-test">1. What Is the Turing Test?</a>
+          <a href="#llm-change">2. How Large Language Models Change the Turing Test</a>
+          <a href="#human-judgment">3. How Do Humans Decide Who Is Human?</a>
+          <a href="#chinese-room">4. The Chinese Room</a>
+          <a href="#comparison">5. Comparing the Turing Test and the Chinese Room</a>
+          <a href="#summary">6. Summary</a>
+          <a href="#references">References</a>
+        </nav>
+
+        <section class="section" id="turing-test" aria-labelledby="turing-test-title">
+          <div class="section-heading">
+            <h2 id="turing-test-title">1. What Is the Turing Test?</h2>
+            <div class="content">
+              <p>In 1950, Alan Turing asked a famous question: can machines think? He quickly noted that the words machine and think are hard to define clearly. So instead of trying to settle the meaning of those terms directly, he turned the abstract problem into a more workable test. That test later became known as the Turing Test, or the imitation game.</p>
+              <p>The basic idea is simple. A human judge talks by text with two partners. One is a real human and the other is a machine. The judge cannot see either partner and must decide from the written replies which one is human and which one is machine.</p>
+              <p>The importance of the test is that it turns the difficult question of thinking into a question of behavior. The Turing Test does not directly measure whether a machine has consciousness, a soul, or inner experience. It asks whether the machine can perform in a conversation in a way that makes it hard to distinguish from a human.</p>
+              <p>For this reason, the Turing Test can also be understood as a test of replaceability. If a system can take a human role in conversation and lead a judge to mistake it for a person, or leave the judge close to random guessing, then the system shows that it can substitute for a human role in that interaction. It does not prove that the machine truly thinks. It shows that the machine can act like a human in a social situation.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="llm-change" aria-labelledby="llm-change-title">
+          <div class="section-heading">
+            <h2 id="llm-change-title">2. How Large Language Models Change the Turing Test</h2>
+            <div class="content">
+              <p>Early chatbots mostly relied on fixed rules and prewritten response patterns. They could imitate conversation in narrow situations, but once users moved outside the expected range, the illusion often broke. ELIZA from the 1960s is a classic example. It could imitate the style of a therapist, but it did not really understand the user's input.</p>
+              <p>Large language models changed this situation. Rather than following only a small set of fixed rules, they are trained on very large text corpora and learn patterns in language. This makes their responses more natural, more flexible, and more sensitive to context. Once these models enter a Turing Test setting, the question is no longer only whether a machine can answer. The question becomes whether a machine can act like a specific person in open conversation.</p>
+              <p>A recent study by Jones and Bergen provides an important example. In a standard three-party Turing Test, participants talked by text with both a real human and an AI system, then judged which one was human. With suitable persona prompts, some large language models met or exceeded the 50 percent threshold. GPT-4.5 was judged as human 73 percent of the time in a five-minute test, while LLaMa-3.1-405B reached 56 percent. ELIZA and GPT-4o scored below chance.</p>
+              <p>The significance of this result is not only that the models answered well. It is that they could perform a more complete sense of personhood. The study highlights the importance of persona prompts. A vague instruction to act human may not be enough, but a more specific role with age, tone, background, or internet style makes it easier for a model to maintain a consistent voice and appear more like a real person.</p>
+              <p>Large language models therefore shift the Turing Test toward a new problem. AI is not only about giving correct answers. It is also about presenting a believable role in social interaction. That matters not only for knowledge work, but also for identity imitation, social exchange, and trust.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="human-judgment" aria-labelledby="human-judgment-title">
+          <div class="section-heading">
+            <h2 id="human-judgment-title">3. How Do Humans Decide Who Is Human?</h2>
+            <div class="content">
+              <p>In today's Turing Test, human judges do not only rely on knowledge questions or logic puzzles. This differs from a common intuition about intelligence. We might assume that someone who answers obscure facts correctly, reasons quickly, or gives complete information will seem more human. With large language models, that assumption becomes more complicated.</p>
+              <p>People now know that computers and AI are often very good at knowledge questions. If a speaker answers too quickly, too correctly, or too completely, that can actually trigger suspicion that the speaker is AI. In other words, features that once looked like signs of intelligence can now look like signs of not being human.</p>
+              <p>Instead, judges often look for human clues in language style, rhythm, emotion, humor, personal opinion, and small mistakes. A real person may make typos, forget a minor fact, sound unsure, or hesitate. These may look like weaknesses, but in the context of deciding whether someone is human, they can serve as evidence of humanness.</p>
+              <p>This creates an interesting paradox. If AI wants to pass the Turing Test, it may not be enough to pursue perfect answers. It may need to imitate human imperfection. It needs to know when not to sound too complete, when to sound uncertain, when to shift into ordinary language, and even when to make a small mistake.</p>
+              <p>This shows that the Turing Test does not measure raw knowledge alone. It measures the performance of the whole interaction. Human judges are often not looking for the smartest speaker. They are looking for the one who feels most like a real person in everyday life.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="chinese-room" aria-labelledby="chinese-room-title">
+          <div class="section-heading">
+            <h2 id="chinese-room-title">4. The Chinese Room: Understanding or Just Moving Symbols?</h2>
+            <div class="content">
+              <p>The Turing Test focuses on outward performance. If a machine behaves in conversation in a way that people cannot distinguish from a real person, can we treat it as having some kind of intelligence? This view has drawn important criticism. One of the most famous comes from John Searle's Chinese Room thought experiment from 1980.</p>
+              <p>In <em>Minds, Brains, and Programs</em>, Searle argues that running a computer program is not enough to produce intentionality, which means a mental state that is about or directed toward meaning. His claim is that executing a program by itself is not a sufficient condition for understanding.</p>
+              <p>The thought experiment works like this. Imagine a person locked in a room who does not understand Chinese. People outside the room pass in questions written in Chinese. The person inside cannot read Chinese, but has a rule book written in a language they do understand. The book tells them which Chinese symbols to send out when certain other Chinese symbols appear. By following the rules, the person can return an appropriate Chinese answer.</p>
+              <p>From the outside, the room seems to understand Chinese because it receives Chinese questions and produces suitable Chinese answers. But the person inside does not know what any of the Chinese symbols mean. They are only manipulating symbols according to rules.</p>
+              <p>The key distinction here is between syntax and semantics. Syntax is about the formal arrangement and transformation of symbols. Semantics is about meaning, such as what a word refers to in the world or in experience. Searle's point is that a computer program may be very successful at handling syntax without actually possessing semantics.</p>
+              <p>That is why the Chinese Room challenges the Turing Test at a basic level. Even if an AI performs like a human in conversation and persuades people that it understands, that does not necessarily mean that it truly understands. It may simply be extremely effective at manipulating language symbols.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="comparison" aria-labelledby="comparison-title">
+          <div class="section-heading">
+            <h2 id="comparison-title">5. Comparing the Turing Test and the Chinese Room</h2>
+            <div class="content">
+              <p>The Turing Test and the Chinese Room do not ask exactly the same question. The Turing Test asks whether a machine can act like a human in interaction. The Chinese Room asks whether acting like understanding is the same as truly understanding.</p>
+              <div class="comparison-cards" aria-label="Comparison between the Turing Test and the Chinese Room">
+                <div class="comparison-card">
+                  <div class="comparison-label">Main question</div>
+                  <div class="comparison-item">
+                    <strong>Turing Test</strong>
+                    <p>Can a machine act like a human?</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>Chinese Room</strong>
+                    <p>Does acting like understanding mean real understanding?</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">Focus</div>
+                  <div class="comparison-item">
+                    <strong>Turing Test</strong>
+                    <p>Conversation, behavior, and distinguishability</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>Chinese Room</strong>
+                    <p>Symbol manipulation, meaning, and mental state</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">Judgment</div>
+                  <div class="comparison-item">
+                    <strong>Turing Test</strong>
+                    <p>Can human judges tell the human and machine apart?</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>Chinese Room</strong>
+                    <p>Does the system truly understand the meaning of symbols?</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">Meaning for AI</div>
+                  <div class="comparison-item">
+                    <strong>Turing Test</strong>
+                    <p>AI may take human roles in social interaction</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>Chinese Room</strong>
+                    <p>Language ability does not necessarily equal understanding</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">Teaching focus</div>
+                  <div class="comparison-item">
+                    <strong>Turing Test</strong>
+                    <p>Looks human</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>Chinese Room</strong>
+                    <p>Truly understands</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="summary" aria-labelledby="summary-title">
+          <div class="section-heading">
+            <h2 id="summary-title">Summary</h2>
+            <div class="content">
+              <p>To judge whether AI is intelligent, we need to separate the question into different levels.</p>
+              <div class="summary-cards">
+                <div class="summary-card">
+                  <p>Can AI act like a human in outward performance? The Turing Test offers a classic way to approach this question by asking whether people can tell the machine apart from a person in conversation.</p>
+                </div>
+                <div class="summary-card">
+                  <p>The Chinese Room reminds us that acting like understanding is not the same as real understanding. Fluent output does not automatically prove a humanlike mind, consciousness, or semantic experience.</p>
+                </div>
+              </div>
+              <p>In addition, large language models make these questions more practical than before. What once looked like a philosophical or science fiction problem now matters in many real text interactions. This pushes us to rethink online interaction, identity judgment, and trust.</p>
+              <p>Even if generative AI currently looks more like a performance of intelligence than genuine humanlike understanding, we can still see how widely it is being used across different settings. In libraries, we can already see several directions of application, even as new issues continue to appear.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="references" aria-labelledby="references-title">
+          <div class="section-heading">
+            <h2 id="references-title">References</h2>
+            <div class="content">
+              <div class="reference-list">
+                <div class="reference-item">
+                  <p>Jones, C. R., &amp; Bergen, B. K. (2026). Large language models pass a standard three-party Turing test. <em>Proceedings of the National Academy of Sciences, 123</em>(21), Article e2524472123. <a href="https://doi.org/10.1073/pnas.2524472123">https://doi.org/10.1073/pnas.2524472123</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>Searle, J. R. (1980). Minds, brains, and programs. <em>Behavioral and Brain Sciences, 3</em>(3), 417-424. <a href="https://doi.org/10.1017/S0140525X00005756">https://doi.org/10.1017/S0140525X00005756</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433-460. <a href="https://doi.org/10.1093/mind/LIX.236.433">https://doi.org/10.1093/mind/LIX.236.433</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <nav class="section-pager" aria-label="Page navigation">
+          <a class="pager-link" href="./index.html">
+            <span class="pager-label">Back</span>
+            <span class="pager-title">AI &amp; Library</span>
+            <span class="pager-note">Return to the module overview.</span>
+          </a>
+          <a class="pager-link" href="./section-02.html">
+            <span class="pager-label">Next</span>
+            <span class="pager-title">Section 02</span>
+            <span class="pager-note">Continue to reader-facing AI applications.</span>
+          </a>
+        </nav>
+      </main>
+    </div>
+  </body>
+</html>

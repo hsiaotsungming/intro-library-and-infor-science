@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>人工智慧有智能嗎？｜圖書資訊傳播導論</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #172333;
+        background: #f7f8fa;
+        --ink: #172333;
+        --muted: #53616f;
+        --line: #d8dee6;
+        --panel: #ffffff;
+        --accent: #23557d;
+        --green: #2d8a78;
+        --soft: #eef3f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 44%, #edf2f5 100%);
+      }
+
+      .site {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0 72px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        padding-bottom: 56px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 4px;
+      }
+
+      .brand-title {
+        color: var(--ink);
+        font-size: 1.08rem;
+        font-weight: 700;
+      }
+
+      .brand span,
+      .back-link {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: grid;
+        justify-items: end;
+        gap: 18px;
+      }
+
+      .lang-switch {
+        display: inline-flex;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .lang-switch a {
+        padding: 8px 14px;
+        border-radius: 999px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.86rem;
+        line-height: 1;
+      }
+
+      .lang-switch a.active {
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .back-link {
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        padding: 8px 0;
+      }
+
+      .back-link:hover,
+      .jump-nav a:hover {
+        color: var(--accent);
+        border-color: var(--green);
+      }
+
+      main {
+        display: grid;
+        gap: 34px;
+      }
+
+      .hero {
+        max-width: 980px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--green);
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        color: var(--ink);
+        font-size: clamp(3.2rem, 7vw, 6rem);
+        line-height: 1.02;
+      }
+
+      .lede {
+        max-width: 900px;
+        margin-top: 24px;
+        color: #40505f;
+        font-size: clamp(1.42rem, 2.2vw, 1.95rem);
+        line-height: 1.62;
+      }
+
+      .jump-nav,
+      .section-pager {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .jump-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: #334155;
+        background: rgba(255, 255, 255, 0.78);
+        text-decoration: none;
+        font-size: 0.96rem;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 36px;
+        align-items: start;
+      }
+
+      h2 {
+        color: var(--ink);
+        font-size: clamp(1.9rem, 3vw, 2.7rem);
+        line-height: 1.2;
+      }
+
+      .content {
+        display: grid;
+        gap: 20px;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        color: var(--muted);
+        font-size: clamp(1.12rem, 1.5vw, 1.28rem);
+        line-height: 1.74;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.35em;
+      }
+
+      li + li {
+        margin-top: 10px;
+      }
+
+      .summary-cards {
+        display: grid;
+        gap: 12px;
+      }
+
+      .summary-card {
+        padding: 20px 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .inline-figure {
+        margin: 4px 0 2px;
+      }
+
+      .inline-figure img {
+        display: block;
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+
+      .inline-figure-image {
+        display: block;
+      }
+
+      .inline-figure figcaption {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .inline-figure a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .comparison-cards {
+        display: grid;
+        gap: 14px;
+      }
+
+      .comparison-card {
+        display: grid;
+        grid-template-columns: 180px repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .comparison-label {
+        color: var(--accent);
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.45;
+      }
+
+      .comparison-item strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 0.98rem;
+      }
+
+      .comparison-item p {
+        font-size: 1.02rem;
+      }
+
+      .reference-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .reference-item {
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--accent);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .reference-item a {
+        color: var(--accent);
+        word-break: break-word;
+      }
+
+      .section-pager {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding-top: 10px;
+        border-bottom: 0;
+      }
+
+      .pager-link {
+        display: grid;
+        gap: 6px;
+        min-height: 120px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.84);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .pager-link:hover {
+        border-color: #b8c7d6;
+        box-shadow: 0 14px 32px rgba(23, 35, 51, 0.06);
+      }
+
+      .pager-label {
+        color: var(--green);
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      .pager-title {
+        color: var(--ink);
+        font-size: 1.2rem;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .pager-note {
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 920px) {
+        .site {
+          width: min(100% - 32px, 760px);
+        }
+
+        header,
+        .section-heading {
+          display: block;
+        }
+
+        .header-actions {
+          justify-items: start;
+          margin-top: 18px;
+        }
+
+        .content {
+          margin-top: 18px;
+        }
+
+        .section-pager,
+        .comparison-card {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site">
+      <header>
+        <div class="brand">
+          <span class="brand-title">圖書資訊傳播導論</span>
+          <span>人工智慧與圖書館</span>
+        </div>
+
+        <div class="header-actions">
+          <div class="lang-switch" aria-label="語言切換">
+            <a href="./section-01.html">ENG</a>
+            <a class="active" href="./section-01-zh.html" aria-current="page">繁中</a>
+          </div>
+          <a class="back-link" href="./zh.html">回到單元</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <span class="eyebrow">單元 01 章節 01</span>
+          <h1 id="page-title">人工智慧有智能嗎？</h1>
+          <p class="lede">從圖靈測試到中文房間</p>
+          <p class="lede" style="font-size: clamp(1.18rem, 1.7vw, 1.35rem); margin-top: 18px;">
+            看起來像人是不是代表像人一樣理解？這邊先從 Alan Turing 提出的圖靈測試（Turing Test）談起，說明這項測試如何處理機器能否思考這個問題。我們也將看看大型語言模型如何改變圖靈測試的意義，以及人類如何辨識對方是否為真人。另外，我們也會看看 John Searle 的中文房間（Chinese Room）思想實驗，看看它如何質疑圖靈測試。
+          </p>
+        </section>
+
+        <nav class="jump-nav" aria-label="章節導覽">
+          <a href="#turing-test">1. 圖靈測試是什麼</a>
+          <a href="#llm-change">2. 大型語言模型如何改變圖靈測試</a>
+          <a href="#human-judgment">3. 人類如何判斷對方是不是人</a>
+          <a href="#chinese-room">4. 中文房間</a>
+          <a href="#comparison">5. 圖靈測試與中文房間的對照</a>
+          <a href="#summary">6. 小結</a>
+          <a href="#references">參考文獻</a>
+        </nav>
+
+        <section class="section" id="turing-test" aria-labelledby="turing-test-title">
+          <div class="section-heading">
+            <h2 id="turing-test-title">1. 圖靈測試是什麼</h2>
+            <div class="content">
+              <p>Alan Turing 在 1950 年發表的 <em>Computing Machinery and Intelligence</em> 中，提出一個著名問題，機器能思考嗎？不過，Turing 很快指出，若要直接定義機器與思考這兩個詞，問題會變得非常模糊。因此，他選擇把這個抽象問題改寫成一個比較可操作的測試，也就是後來被稱為圖靈測試的模仿遊戲（imitation game）。</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/turing-test.webp" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/turing-test.webp" alt="Turing Test diagram showing a computer, a human responder, and an interrogator">
+                </a>
+                <figcaption>
+                  圖靈測試示意圖<br>
+                  來源：<a href="https://seattlewebsitedesign.medium.com/what-is-a-turing-testt-d379477fed9b">https://seattlewebsitedesign.medium.com/what-is-a-turing-testt-d379477fed9b</a>
+                </figcaption>
+              </figure>
+              <p>圖靈測試的基本精神是，與其爭論機器是否真的有心智，不如觀察它在互動中的表現是否足以讓人分不出它與真人的差別。在典型的三方測試中，一位人類審問者透過文字與兩個對象互動。其中一位是真人，另一位是機器。審問者看不到對方，只能根據文字回答判斷哪一位是人類、哪一位是機器。</p>
+              <p>這個測試的重要性，在於它把思考這個難以直接觀察的問題，轉換成行為表現的問題。也就是說，圖靈測試不直接測量機器是否擁有意識、靈魂或內在經驗，而是測量它能不能在特定對話情境中，表現得與人類無法區分。</p>
+              <p>因此，圖靈測試可以被理解為一種可替代性測試。如果一個系統在對話中能夠讓人類審問者誤認它是人，或讓審問者只能接近隨機猜測，那麼這個系統在該互動情境中就具有某種替代人類角色的能力。它不一定證明機器真的會思考，但它證明機器可以在某些社會互動中扮演人類角色。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="llm-change" aria-labelledby="llm-change-title">
+          <div class="section-heading">
+            <h2 id="llm-change-title">2. 大型語言模型如何改變圖靈測試</h2>
+            <div class="content">
+              <p>早期的聊天機器人多半依賴固定規則或預先設計好的回答模式。它們可以在非常有限的情境中模仿對話，但只要問題稍微超出設定範圍，就容易露出破綻。1960 年代的 ELIZA 是這類系統的經典例子。它能用簡單規則模仿心理諮商式對話，但並不真正理解使用者輸入的內容。</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/eliza-system.png" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/eliza-system.png" alt="ELIZA system interface showing a text-based conversation">
+                </a>
+                <figcaption>
+                  ELIZA 對話系統介面<br>
+                  來源：<a href="https://es.linkedin.com/pulse/eliza-el-primer-chatbot-que-revolucion%C3%B3-la-humana-alvarado-guzm%C3%A1n-qhiuc">https://es.linkedin.com/pulse/eliza-el-primer-chatbot-que-revolucion%C3%B3-la-humana-alvarado-guzm%C3%A1n-qhiuc</a>
+                </figcaption>
+              </figure>
+              <p>大型語言模型改變了這個情況。它們不是只依照少數固定規則回答，而是透過大量語料訓練，學會預測語言中的模式。這使它們能夠產生更自然、更有彈性，也更符合情境的回答。當這類模型被放入圖靈測試的場景中時，問題就不再只是機器能不能回答問題，而是機器能不能在開放式互動中表現得像一個具體的人。</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/turing-test-results.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/turing-test-results.jpg" alt="Figure comparing AI witness win rates and confidence in Turing test verdicts">
+                </a>
+                <figcaption>
+                  左：各 AI 受試模型在圖靈測試中的勝率；右：審問者在判定真人或 AI 時的信心程度。<br>
+                  來源：<a href="https://www.pnas.org/doi/10.1073/pnas.2524472123">https://www.pnas.org/doi/10.1073/pnas.2524472123</a>
+                </figcaption>
+              </figure>
+              <p>Jones 與 Bergen 的研究即是近年重要案例。他們以標準三方圖靈測試進行實驗，讓參與者同時與真人和 AI 系統進行文字對話，再判斷哪一方是人類。研究結果指出，在適當的人格提示詞（persona prompt）引導下，部分大型語言模型被判定為人類的比例可達或超過 50% 的門檻。其中 GPT-4.5 在 5 分鐘測試中被判定為人類的比例達 73%，LLaMa-3.1-405B 則為 56%。相較之下，ELIZA 與 GPT-4o 等基準系統的表現低於隨機門檻。</p>
+              <p>這個結果的重要性不只在於模型答得好，而在於模型能夠表現出更完整的角色感。研究中特別強調人格提示詞的重要性。若只是要求模型假裝成人類，表現可能不夠自然。但若給予它一個具體人格，例如特定年齡、語氣、生活背景或網路文化風格，模型就更容易在互動中維持一致的說話方式，讓審問者覺得它像一個真實的人。</p>
+              <p>因此，大型語言模型讓圖靈測試的討論轉向一個新問題。AI 不只是能不能提供正確答案，而是能不能在社會互動中呈現出可信的角色。這也提醒我們，生成式 AI 的影響不只在知識回答，也在身份模仿、社交互動與信任判斷。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="human-judgment" aria-labelledby="human-judgment-title">
+          <div class="section-heading">
+            <h2 id="human-judgment-title">3. 人類如何判斷對方是不是人</h2>
+            <div class="content">
+              <p>在現代圖靈測試中，人類審問者不一定只用知識題或邏輯題來測試對方。這一點和我們對智慧的直覺想像不同。一般來說，我們可能以為，如果某個對話者能正確回答冷門知識、快速進行推理、或提供完整資訊，它就會更像人。但在大型語言模型普及之後，情況反而變得更複雜。</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/interrogator-strategies.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/interrogator-strategies.jpg" alt="Figure showing interrogator strategy categories, their proportion of games, and mean accuracy with confidence intervals">
+                </a>
+                <figcaption>
+                  左：審問者在圖靈測試中採用各種策略的比例；右：使用這些策略時的平均判斷正確率與 95% 信賴區間。<br>
+                  來源：<a href="https://www.pnas.org/doi/10.1073/pnas.2524472123">https://www.pnas.org/doi/10.1073/pnas.2524472123</a>
+                </figcaption>
+              </figure>
+              <p>原因在於，現代人已經知道電腦和 AI 通常很擅長回答知識性問題。如果一個對話者回答得太完整、太快速、太正確，反而可能讓人懷疑它是 AI。換言之，過去被視為智慧象徵的特徵，現在有時會變成不像人的線索。</p>
+              <p>相反地，人類審問者更常從語言風格、互動節奏、情緒表現、幽默感、主觀意見與小錯誤中尋找人性線索。比如說，一個人可能會打錯字、忘記冷門知識、回答得不太確定，或在對話中表現出猶豫。這些特徵原本看起來像缺點，但在判斷對方是不是人時，反而可能成為人性的證明。</p>
+              <p>這也造成一個有趣的悖論。AI 若想在圖靈測試中表現得像人，可能不能只追求完美答案。它還需要模仿人類的不完美。它需要知道什麼時候不要太完整、什麼時候表現出不確定、什麼時候使用日常語氣，甚至什麼時候犯一點小錯。</p>
+              <p>這個現象讓我們看到，圖靈測試測量的不是單純的知識量，而是整體互動表現。人類判斷誰是人時，常常不是在尋找最聰明的回答者，而是在尋找最像日常生活中真人的互動對象。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="chinese-room" aria-labelledby="chinese-room-title">
+          <div class="section-heading">
+            <h2 id="chinese-room-title">4. 中文房間：理解，還是只是操作符號</h2>
+            <div class="content">
+              <p>圖靈測試關心的是外在表現。如果一個機器在對話中讓人無法分辨它和真人，那麼它是否可以被視為具有某種智慧？然而，這個觀點也引發了重要批評。最著名的批評之一，就是 John Searle 在 1980 年提出的中文房間思想實驗。</p>
+              <p>Searle 的 <em>Minds, Brains, and Programs</em> 發表於 <em>Behavioral and Brain Sciences</em>。該文的核心論點是，執行電腦程式本身，並不足以產生意向性（intentionality），也就是具有指向意義的心智狀態。換句話說，單純執行程式並不是產生心智或理解的充分條件。</p>
+              <figure class="inline-figure">
+                <a class="inline-figure-image" href="./assets/chinese-room.jpg" target="_blank" rel="noopener noreferrer">
+                  <img src="./assets/chinese-room.jpg" alt="Illustration of the Chinese Room thought experiment">
+                </a>
+                <figcaption>
+                  中文房間思想實驗<br>
+                  來源：<a href="https://www.newton.com.tw/wiki/%E4%B8%AD%E6%96%87%E6%88%BF%E9%96%93#google_vignette">https://www.newton.com.tw/wiki/%E4%B8%AD%E6%96%87%E6%88%BF%E9%96%93#google_vignette</a>
+                </figcaption>
+              </figure>
+              <p>中文房間的設想如下。有一個完全不懂中文的人被關在房間裡。房間外的人把中文問題寫在紙上遞進來。房間內的人雖然看不懂中文，但他有一本以自己看得懂的語言寫成的規則手冊。這本手冊告訴他，看到某些中文符號時，應該輸出哪些中文符號。於是，他按照規則查找、轉換，最後把中文答案交出去。</p>
+              <p>從房間外的人看來，這個房間似乎能理解中文。因為它收到中文問題，也能回覆合適的中文答案。但實際上，房間裡的人完全不知道這些中文符號的意思。他只是依照規則操作符號。</p>
+              <p>這個思想實驗的關鍵，在於區分語法（syntax）與語意（semantics）。語法指的是符號的形式規則，例如如何排列、轉換或配對符號。語意指的是符號的意義，例如一個詞指向什麼概念、經驗或世界中的事物。Searle 的主張是，電腦程式可以非常成功地處理語法，但這不等於它真的擁有語意。</p>
+              <p>因此，中文房間對圖靈測試提出了一個根本挑戰。即使一個 AI 能在對話中表現得像人，甚至讓人類審問者相信它理解內容，這也不必然代表它真的理解。它可能只是非常有效地操作語言符號，而不是像人一樣理解語言背後的意義。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="comparison" aria-labelledby="comparison-title">
+          <div class="section-heading">
+            <h2 id="comparison-title">5. 圖靈測試與中文房間的對照</h2>
+            <div class="content">
+              <p>圖靈測試與中文房間並不是在問完全相同的問題。圖靈測試問的是，機器在互動表現上能不能像人。中文房間問的是，即使機器表現得像人，它是否真的理解自己在說什麼。</p>
+              <div class="comparison-cards" aria-label="圖靈測試與中文房間的比較">
+                <div class="comparison-card">
+                  <div class="comparison-label">核心問題</div>
+                  <div class="comparison-item">
+                    <strong>圖靈測試</strong>
+                    <p>機器能不能表現得像人？</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>中文房間</strong>
+                    <p>表現得像理解，是否等於真的理解？</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">觀察重點</div>
+                  <div class="comparison-item">
+                    <strong>圖靈測試</strong>
+                    <p>對話行為、互動表現、可辨識性</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>中文房間</strong>
+                    <p>符號操作、語意理解、心智狀態</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">判斷方式</div>
+                  <div class="comparison-item">
+                    <strong>圖靈測試</strong>
+                    <p>人類審問者是否能分辨真人與機器</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>中文房間</strong>
+                    <p>系統是否真的理解符號意義</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">對 AI 的意義</div>
+                  <div class="comparison-item">
+                    <strong>圖靈測試</strong>
+                    <p>AI 可能在社會互動中扮演人類角色</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>中文房間</strong>
+                    <p>AI 的語言能力不必然等於理解能力</p>
+                  </div>
+                </div>
+                <div class="comparison-card">
+                  <div class="comparison-label">教學重點</div>
+                  <div class="comparison-item">
+                    <strong>圖靈測試</strong>
+                    <p>看起來像人</p>
+                  </div>
+                  <div class="comparison-item">
+                    <strong>中文房間</strong>
+                    <p>是否真的理解</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="summary" aria-labelledby="summary-title">
+          <div class="section-heading">
+            <h2 id="summary-title">小結</h2>
+            <div class="content">
+              <p>判斷 AI 有沒有智慧，要區分成不同層次的問題。</p>
+              <div class="summary-cards">
+                <div class="summary-card">
+                  <p>AI 能不能在外在表現上像人？圖靈測試提供了一個經典方式來處理這個問題。它不直接討論機器是否有意識，而是觀察機器能否在對話中讓人難以分辨。</p>
+                </div>
+                <div class="summary-card">
+                  <p>中文房間提醒我們，表現得像理解，不等於真的理解。AI 可以產生流暢文字，但這不必然表示它擁有和人一樣的心智、意識或語意經驗。</p>
+                </div>
+              </div>
+              <p>此外，現代大型語言模型已經讓這些問題變得更實際。過去，圖靈測試可能像是一個哲學或科幻問題，但今日的生成式 AI 已經能在許多文字互動中扮演可信角色。這使我們必須重新思考線上互動、身份判斷與信任問題。</p>
+              <p>不過，即使生成式 AI 目前更像是表現出智慧，而不一定真的擁有像人一樣的理解能力，我們仍然可以看到它已經在不同應用場景中被廣泛使用。以圖書館來說，已經可以看到在幾個方向加以應用，但也隨著出現新的議題。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="references" aria-labelledby="references-title">
+          <div class="section-heading">
+            <h2 id="references-title">參考文獻</h2>
+            <div class="content">
+              <div class="reference-list">
+                <div class="reference-item">
+                  <p>Jones, C. R., &amp; Bergen, B. K. (2026). Large language models pass a standard three-party Turing test. <em>Proceedings of the National Academy of Sciences, 123</em>(21), Article e2524472123. <a href="https://doi.org/10.1073/pnas.2524472123">https://doi.org/10.1073/pnas.2524472123</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>Searle, J. R. (1980). Minds, brains, and programs. <em>Behavioral and Brain Sciences, 3</em>(3), 417-424. <a href="https://doi.org/10.1017/S0140525X00005756">https://doi.org/10.1017/S0140525X00005756</a></p>
+                </div>
+                <div class="reference-item">
+                  <p>Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433-460. <a href="https://doi.org/10.1093/mind/LIX.236.433">https://doi.org/10.1093/mind/LIX.236.433</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <nav class="section-pager" aria-label="頁面導覽">
+          <a class="pager-link" href="./zh.html">
+            <span class="pager-label">返回</span>
+            <span class="pager-title">人工智慧與圖書館</span>
+            <span class="pager-note">回到單元總覽。</span>
+          </a>
+          <a class="pager-link" href="./section-02-zh.html">
+            <span class="pager-label">下一步</span>
+            <span class="pager-title">章節 02</span>
+            <span class="pager-note">繼續閱讀讀者能看到的 AI 應用。</span>
+          </a>
+        </nav>
+      </main>
+    </div>
+  </body>
+</html>
